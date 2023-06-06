@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="/static/homepage/styles.css">{% endblock css %}
+
+{% block content %}
+
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="5000">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" class="d-block w-100" alt="...">
+    </div>
+
+    {% for i in carousel %}
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="{{ i.thumbnail }}" class="d-block w-100" alt="...">
+    </div>
+    {% endfor %}
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+{% for category in categories %}
+<hr style="border: 5px solid green;">
+{% if category.id == 1 or category.id == 3 or category.id == 5 or category.id == 7 or category.id == 9 or category.id == 11 %}
+
+<div class="cat-card card mb-3" style="max-width: 100%">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img class="cat-img" src="{{ category.image }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h1 class="card-text">{{ category.desc }}</h1>
+        <a class="btn btn-dark" href="{% url 'specific_category' category=category.title %}">Shop</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+
+<div class="cat-card text-bg-secondary card mb-3" style="max-width: 100%">
+  <div class="row g-0">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h1 class="card-text">{{ category.desc }}</h1>
+        <a class="btn btn-dark" href="{% url 'specific_category' category=category.title %}">Shop</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <img class="cat-img" src="{{ category.image }}" class="img-fluid rounded-start" alt="...">
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+
+<hr style="border: 5px solid green;">
+
+<div class="headline bg-warning">
+  <h1>Our Products💚</h1>
+</div>
+
+
+<div class="row container-fluid products">
+
+  <div class="row">
+    {% for product in products %}
+
+    <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="card product-card text-bg-light text-bg-secondary" style="width: 18rem;">
+        <img src="{{ product.thumbnail }}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.title }}</h5>
+          <p class="card-text">{{ product.desc }}</p>
+          <a href="{% url 'specific_product' slug=product.slug %}" class="btn btn-dark">Open</a>
+          <a href="{% url 'add_to_cart' slug=product.slug %}" class="btn btn-dark"><i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+
+{% endblock content %}

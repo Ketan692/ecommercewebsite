@@ -1,0 +1,30 @@
+footer {
+  margin-top: 15%;
+  text-align: center;
+}
+
+.social-icon {
+  padding: 10px;
+  font-size: 1.2rem;
+}
+
+.social {
+  text-decoration: none;
+  color: black;
+}
+
+.container {
+  margin-top: 1%;
+  padding: 0 24%;
+  text-align: center;
+}
+
+h1 {
+  padding-bottom: 2%;
+  background-color: grey;
+  font-weight: bold;
+}
+
+.address {
+  padding: 0 5%;
+}

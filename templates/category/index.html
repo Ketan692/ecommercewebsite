@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Category{% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="/static/homepage/styles.css">{% endblock css %}
+
+{% block content %}
+
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="5000">
+      {% if topic == "smartphones" %}
+      <img src="https://images.pexels.com/photos/1275929/pexels-photo-1275929.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="...">
+      {% elif topic == "laptops" %}
+      <img src="https://images.pexels.com/photos/8092507/pexels-photo-8092507.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="...">
+      {% elif topic == "fragrances" %}
+      <img src="https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="...">
+      {% elif topic == "skincare" %}
+      <img src="https://images.pexels.com/photos/4888814/pexels-photo-4888814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="...">
+      {% elif topic == "groceries" %}
+      <img src="https://images.pexels.com/photos/6152386/pexels-photo-6152386.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="...">
+      {% elif topic == "home-decoration" %}
+      <img src="https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg?auto=compress&cs=tinysrgb&w=600" class="d-block w-100" alt="...">
+      {% endif %}
+    </div>
+
+    {% for i in carousel %}
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="{{ i.thumbnail }}" class="d-block w-100" alt="...">
+    </div>
+    {% endfor %}
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<hr style="border: 5px solid green;">
+
+<div class="headline bg-warning">
+  <h1>Our {{ topic }}💚</h1>
+</div>
+
+
+<div class="row container-fluid products">
+
+  <div class="row">
+    {% for product in products %}
+
+    <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="card product-card text-bg-light text-bg-secondary" style="width: 18rem;">
+        <img src="{{ product.thumbnail }}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.title }}</h5>
+          <p class="card-text">{{ product.desc }}</p>
+          <a href="{% url 'specific_product' slug=product.slug %}" class="btn btn-dark">Open</a>
+          <a href="{% url 'add_to_cart' slug=product.slug %}" class="btn btn-dark"><i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+
+{% endblock content %}

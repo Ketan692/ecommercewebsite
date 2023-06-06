@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/cart/styles.css">
+{% endblock css %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <h2 class="cart-head">Your Cart</h2>
+
+  {% if cart %}
+  <div class="row">
+    <div class="col-9 ca-tb">
+
+      <div class="table-responsive">
+
+        <table class="cart-table table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cart_product in cart %}
+            <tr>
+              <td>{{ cart_product.product.title }}</td>
+              <td>${{ cart_product.product.price }}</td>
+              <td><a class="btn btn-secondary btn-sm" href="{% url 'adjust_quantity' id=cart_product.id process='minus' %}">-</a> {{ cart_product.quantity }} <a class="btn btn-secondary btn-sm"
+                  href="{% url 'adjust_quantity' id=cart_product.id process='plus' %}">+</a></td>
+              <td>${{ cart_product.total }}</td>
+              <td><a class="btn btn-danger" href="{% url 'delete_item' id=cart_product.id %}"><i class="fa-solid fa-trash"></i></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cart-summary">
+        <h4>Total Items: {{ total_quantity }}</h4>
+        <h4>Total Price: ${{ cart_total }}</h4>
+        {% if main_cart.coupon %}
+        <p style="color: red;">Coupon Discount: ${{ main_cart.coupon.discount }}</p>
+        {% endif %}
+      </div>
+
+      <div class="cart-actions">
+        <a href="{% url 'home' %}" class="btn btn-dark">Proceed to Checkout</a>
+      </div>
+
+    </div>
+    <div class="col-3">
+      <form class="" action="{% url 'apply_coupon' %}" method="post">
+        {% csrf_token %}
+        <h5>Have coupon?</h5>
+        <div class="input-group input-group-sm mb-3 coupon">
+          <input name="coupon_code" type="text" class="form-control" placeholder="Enter coupon code">
+          <button class="btn btn-dark" type="submit" id="button-addon2">Apply</button>
+        </div>
+        {% if messages %}
+        {% for message in messages %}
+
+        {% if message.tags == 'success'%}
+        <div class="alert alert-success" role="alert" , style="font-weight: bold;">
+          {{ message | safe }}
+        </div>
+
+        {% elif message.tags == 'info'%}
+        <div class="alert alert-info" role="alert" , style="font-weight: bold;">
+          {{message | safe }}
+        </div>
+
+        {% elif message.tags == 'warning'%}
+        <div class="alert alert-warning" role="alert" , style="font-weight: bold;">
+          {{ message | safe }}
+        </div>
+
+        {% elif message.tags == 'error'%}
+        <div class="alert alert-danger" role="alert" , style="font-weight: bold;">
+          {{ message | safe }}
+        </div>
+
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        {% if main_cart.coupon %}
+        <a class="btn btn-danger" href="{% url 'delete_coupon' %}">{{ main_cart.coupon.code }}</a>
+        {% endif %}
+
+      </form>
+    </div>
+  </div>
+
+  {% else %}
+  <p>Your cart is empty.</p>
+  <a href="{% url 'home' %}" class="btn btn-primary">Continue Shopping</a>
+  {% endif %}
+
+
+  {% endblock content %}

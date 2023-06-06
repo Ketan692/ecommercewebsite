@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit your Address
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/accounts/styles.css">
+{% endblock css %}
+
+{% block content %}
+
+
+<div class="container">
+  {% if messages %}
+  {% for message in messages %}
+
+  {% if message.tags == 'success'%}
+  <div class="alert alert-success" role="alert" , style="font-weight: bold;">
+    {{ message | safe }}
+  </div>
+
+  {% elif message.tags == 'info'%}
+  <div class="alert alert-info" role="alert" , style="font-weight: bold;">
+    {{message | safe }}
+  </div>
+
+  {% elif message.tags == 'warning'%}
+  <div class="alert alert-warning" role="alert" , style="font-weight: bold;">
+    {{ message | safe }}
+  </div>
+
+  {% elif message.tags == 'error'%}
+  <div class="alert alert-danger" role="alert" , style="font-weight: bold;">
+    {{ message | safe }}
+  </div>
+
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+
+  {% for i in address %}
+  <form class="" action="{% url 'edit_address' address=i.id %}" method="post">
+    {% csrf_token %}
+
+    <h1>Edit Address</h1>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Name</span>
+      <input name="name" type="text" class="form-control" placeholder="Username" value="{{ i.name }}" aria-label="Username" aria-describedby="basic-addon1" required>
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon4">Address</span>
+      <input name="address" type="textarea" class="form-control" placeholder="Address" value="{{ i.address }}" aria-label="address" aria-describedby="basic-addon1" required>
+    </div>
+
+    <div class="input-group mb-3">
+
+      <span class="input-group-text" id="basic-addon4">State</span>
+
+      <select name="state" class="form-select" aria-label="Default select example" required>
+        <option selected>{{ i.state }}</option>
+        {% for state in states %}
+        <option value="{{ state }}">{{ state }}</option>
+        {% endfor %}
+      </select>
+
+
+      <span class="input-group-text">City</span>
+      <input name="city" type="text" class="form-control" value="{{ i.city }}" placeholder="City" aria-label="city" required>
+
+      <span class="input-group-text">Postal Code</span>
+      <input name="postal_code" type="text" class="form-control" value="{{ i.postal_code }}" placeholder="Postal Code" aria-label="city" required>
+
+
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Mobile No.</span>
+      <input name="mobile_no" type="tel" class="form-control" value="{{ i.mobile }}" placeholder="Mobile No." required>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Save
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="exampleModalLabel">Are you sure?</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Do you want to save changes?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </form>
+
+</div>
+
+{% endblock content %}

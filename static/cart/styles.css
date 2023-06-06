@@ -1,0 +1,52 @@
+footer, .cart-head, .container {
+  text-align: center;
+}
+
+.cart-head, h1, h4 {
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 15%;
+}
+
+.cart-head {
+  margin-top: 1%;
+}
+
+.social-icon {
+  padding: 10px;
+  font-size: 1.2rem;
+}
+
+.social {
+  text-decoration: none;
+  color: black;
+}
+
+.container {
+  margin-top: 1%;
+  padding: 0 24%;
+}
+
+h1 {
+  padding-bottom: 2%;
+  background-color: grey;
+}
+
+.address {
+  padding: 0 5%;
+}
+
+.cart-summary {
+  color: green;
+  margin-bottom: 2%;
+}
+
+.ca-tb {
+  border-right: solid grey 2px;
+}
+
+.coupon {
+  padding-right: 30%;
+}

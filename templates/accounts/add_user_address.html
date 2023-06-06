@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add your Address
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/accounts/styles.css">
+{% endblock css %}
+
+{% block content %}
+
+
+<div class="container">
+  {% if messages %}
+  {% for message in messages %}
+
+  {% if message.tags == 'success'%}
+  <div class="alert alert-success" role="alert" , style="font-weight: bold;">
+    {{ message | safe }}
+  </div>
+
+  {% elif message.tags == 'info'%}
+  <div class="alert alert-info" role="alert" , style="font-weight: bold;">
+    {{message | safe }}
+  </div>
+
+  {% elif message.tags == 'warning'%}
+  <div class="alert alert-warning" role="alert" , style="font-weight: bold;">
+    {{ message | safe }}
+  </div>
+
+  {% elif message.tags == 'error'%}
+  <div class="alert alert-danger" role="alert" , style="font-weight: bold;">
+    {{ message | safe }}
+  </div>
+
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+
+  <form class="" action="{% url 'submit_address' %}" method="post">
+    {% csrf_token %}
+
+    <h1>Add Address</h1>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Name</span>
+      <input name="name" type="text" class="form-control" placeholder="Username" value="{{ full_name }}" aria-label="Username" aria-describedby="basic-addon1" required>
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon4">Address</span>
+      <input name="address" type="textarea" class="form-control" placeholder="Address" aria-label="address" aria-describedby="basic-addon1" required>
+    </div>
+
+    <div class="input-group mb-3">
+
+      <span class="input-group-text" id="basic-addon4">State</span>
+
+      <select name="state" class="form-select" aria-label="Default select example" required>
+        <option selected>Select</option>
+        {% for state in states %}
+        <option value="{{ state }}">{{ state }}</option>
+        {% endfor %}
+      </select>
+
+
+      <span class="input-group-text">City</span>
+      <input name="city" type="text" class="form-control" placeholder="City" aria-label="city" required>
+
+      <span class="input-group-text">Postal Code</span>
+      <input name="postal_code" type="text" class="form-control" placeholder="Postal Code" aria-label="city" required>
+
+
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Mobile No.</span>
+      <input name="mobile_no" type="tel" class="form-control" placeholder="Mobile No." required>
+    </div>
+
+    <button class="btn btn-dark" type="submit" name="button">Add</button>
+  </form>
+
+</div>
+
+{% endblock content %}
